@@ -6,8 +6,11 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 class NewsList extends Component { 
 	
-	state = { 
-		
+	state = {
+		items:[], 
+		start: this.props.start,
+		end:this.props.start + this.props.amount,
+		amount: this.props.amount
 	}
 
 	render() { 
