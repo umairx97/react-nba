@@ -12,6 +12,10 @@ class NewsList extends Component {
 		amount: this.props.amount
 	}
 
+	componentWillMount () { 
+		axios.get(``)
+	}
+
 	render() { 
 		return ( 
 			<div>
