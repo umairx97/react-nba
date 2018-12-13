@@ -13,7 +13,7 @@ const Footer = () => (
 			</Link>
 
 			<div className = {styles.rights}> 
-				@NBA {CURRENT_YEAR} All rights reserved.
+				`@NBA 2018 All rights reserved.`
 			</div>
 		</div>
 	)   
