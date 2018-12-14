@@ -17,6 +17,22 @@ class VideosList extends Component {
         amount: this.props.amount,
     }
 
+    loadMore = () => { 
+        
+    }
+
+    renderButton = () => { 
+        return this.props.loadmore ? 
+        <Button
+        type = "loadmore"
+        loadmore = {() => this.loadMore()}
+        cta = "Load More Videos"
+        />
+
+        :
+        <Button type = "linkTo" cta="More Videos" linkTo= "/videos"/>
+    }
+
     renderTitle = () => { 
         return this.props.title ? 
         
@@ -27,7 +43,8 @@ class VideosList extends Component {
     render () { 
         return ( 
             <div className = {styles.videoslist_wrapper}> 
-                {this.renderTitle()} 
+                {this.renderTitle()}
+                {this.renderButton()}
             </div>
         )
     }
