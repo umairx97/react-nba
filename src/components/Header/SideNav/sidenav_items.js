@@ -70,5 +70,5 @@ import style from './sidenav.module.css';
 
     }
 
-
+// Exports
 export default SideNavItems;

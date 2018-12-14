@@ -13,8 +13,10 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
 
+// Main Component for News List 
 class NewsList extends Component { 
 	
+	// Initial State Settings 
 	state = {
 		teams: [],
 		items:[], 
@@ -23,11 +25,14 @@ class NewsList extends Component {
 		amount: this.props.amount
 	}
 
+
+	// Lifecycle Methods
 	componentWillMount () { 
 		this.request(this.state.start, this.state.end);
 	}
 
 
+	// Request for teams from start to end as parameters 
 	request = (start, end) => { 
 		if(this.state.teams.length < 1){
 			axios.get(`${URL}/teams`)
@@ -40,6 +45,7 @@ class NewsList extends Component {
 		}
 
 
+		// Request for articles related to teams
 		axios.get(`${URL}/articles?_start=${start}&_end=${end}`)
 		.then(response => { 
 			this.setState({ 
@@ -50,7 +56,7 @@ class NewsList extends Component {
 
 
 
-
+	// Load more news 
 	loadMore = () => { 
 		let end = this.state.end + this.state.amount;
 		this.request(this.state.end, end);
@@ -63,6 +69,7 @@ class NewsList extends Component {
 	renderNews = (type) => { 
 		let template = null; 
 
+		// Rendering the template based on the type passed as props
 		switch(type) {
 			case ('card'): 
 				template = this.state.items.map((item, i) => (
@@ -100,7 +107,9 @@ class NewsList extends Component {
 	}
 
 	render() { 
-		return ( 
+		return (
+			
+			// Props for Components 
 			<div>
 
 				<TransitionGroup
@@ -121,4 +130,5 @@ class NewsList extends Component {
 	}
 }
 
+// Exports
 export default NewsList

@@ -48,4 +48,5 @@ const Header = (props) => {
     )
 }
 
+// Exports
 export default Header;

@@ -1,9 +1,11 @@
+// Imports
 import FontAwesome from 'react-fontawesome';
 import React from 'react';
 import styles from './cardinfo.module.css';
 
 const CardInfo = (props) => { 
 
+    // Rendering the team name in the card
     const teamName = (teams, team) => { 
         let data = teams.find((item) => { 
             return item.id === team 
@@ -15,6 +17,7 @@ const CardInfo = (props) => {
     }
 
     return (
+        // Setting the styles for the team name and the date 
         <div className = {styles.cardinfo}> 
             <span className = {styles.teamName}>
             {teamName(props.teams, props.team)}
@@ -28,4 +31,5 @@ const CardInfo = (props) => {
     )
 } 
 
+// Exports
 export default CardInfo;

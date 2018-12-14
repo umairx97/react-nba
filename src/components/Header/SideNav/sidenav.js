@@ -1,7 +1,9 @@
+// Imports
 import React from 'react';
 import SideNav from 'react-simple-sidenav';
 
 
+// Components
 import SideNavItems from './sidenav_items';
 
 const SideNavigation = (props) => { 
@@ -23,4 +25,5 @@ const SideNavigation = (props) => {
     )
 }
 
+// Exports
 export default SideNavigation;

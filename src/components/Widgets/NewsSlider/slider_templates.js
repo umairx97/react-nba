@@ -60,4 +60,5 @@ const SliderTemplates = (props) => {
 	)
 }
 
+// Exports
 export default SliderTemplates;

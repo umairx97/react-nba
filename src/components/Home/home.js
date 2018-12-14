@@ -1,5 +1,5 @@
+//Imports
 import React from 'react';
-
 
 //Components 
 import NewsSlider from '../Widgets/NewsSlider/slider';
@@ -7,7 +7,9 @@ import NewsList from '../Widgets/NewsList/newsList';
 import VideosList from '../Widgets/VideosList/videoslist';
 
 const Home = () => {
-	return ( 
+	return (
+
+		//Props for the components {NewsSlider, NewsList, VideosList}
 		<div> 
 		   <NewsSlider
 				type = "featured"
@@ -36,5 +38,5 @@ const Home = () => {
 	)
 }
 
-
+// Exports
 export default Home;

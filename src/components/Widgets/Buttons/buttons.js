@@ -1,11 +1,13 @@
+// Imports 
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-
+//Components 
 import styles from './buttons.module.css';
 
 const buttons = (props) => {
     
+    // Setting the template for the button according to type 
     let template = null; 
     switch (props.type){ 
         case 'loadmore':
@@ -35,5 +37,5 @@ const buttons = (props) => {
     return template;
 }
 
-
+// Exports
 export default buttons;
