@@ -25,6 +25,10 @@ class VideosList extends Component {
         this.request(this.state.start, this.state.end)
     }
 
+    renderVideos () { 
+        
+    }
+
 
     // Getting Teams if length is less than 1 and setting the state 
     request = (start, end) => { 
