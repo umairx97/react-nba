@@ -4,12 +4,11 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 
-
-
 // Components 
 import { URL } from '../../../config';
 import styles from './newslist.module.css'
 import Button from '../Buttons/buttons';
+import CardInfo from '../../Widgets/CardInfo/cardinfo';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
@@ -79,7 +78,11 @@ class NewsList extends Component {
 						<div> 
 							<div className = {styles.newslist_item}>
 								<Link to = {`/articles/${item.id}`}>
-									<CardInfo/>
+									<CardInfo
+									teams = {this.state.teams}
+									team = {item.team}
+									date = {item.date}
+									/>
 									<h2>{item.title}</h2>
 								
 								</Link>
