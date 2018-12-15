@@ -75,8 +75,11 @@ class VideosList extends Component {
     renderTitle = () => { 
         return this.props.title ? 
         
-        <h3><strong>NBA</strong> Videos</h3>
-        : null
+        <h3>
+            <strong>NBA</strong> Videos
+        </h3>
+        : 
+        null
     }
 
     render () { 
