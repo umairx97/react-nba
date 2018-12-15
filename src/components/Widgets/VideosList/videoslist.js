@@ -46,7 +46,9 @@ class VideosList extends Component {
         .then(response => { 
             this.setState  ({ 
                 videos: [...this.state.videos,...response.data], 
-                start,
+                
+                // Gets the new value of start and end by updating the state
+                start, 
                 end
             })
         })
@@ -67,6 +69,8 @@ class VideosList extends Component {
         return template;
     }
 
+
+    // Loads more Videos 
     loadMore = () => { 
         let end = this.state.end + this.state.amount;
         this.request(this.state.end, end);
