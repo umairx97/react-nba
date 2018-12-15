@@ -7,7 +7,7 @@ import axios from 'axios';
 // Components 
 import {URL} from '../../../config';
 import Button from '../Buttons/buttons';
-
+import VideosListTemplate from './videoslisttemplate';
 
 
 class VideosList extends Component { 
@@ -25,9 +25,7 @@ class VideosList extends Component {
         this.request(this.state.start, this.state.end)
     }
 
-    renderVideos () { 
-        
-    }
+    
 
 
     // Getting Teams if length is less than 1 and setting the state 
@@ -50,6 +48,21 @@ class VideosList extends Component {
                 videos: [...this.state.videos,...response.data]
             })
         })
+    }
+
+
+    renderVideos =  () => { 
+        let template = null;
+
+        switch (this.props.type){ 
+            case ('card'): 
+                template = <VideosListTemplate data = {this.state.videos} teams = {this.state.teams}/>
+                break;
+            default: 
+                template = null;
+        }
+
+        return template;
     }
 
     loadMore = () => { 
