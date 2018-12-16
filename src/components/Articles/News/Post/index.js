@@ -9,12 +9,15 @@ import Body from './body';
 
 class NewsArticles extends Component { 
 
+    // State of teams and articles 
     state = { 
         article: [], 
         team: []
 
     }
 
+
+    // Loads before the main component
     componentWillMount () { 
         axios.get(`${URL}/articles?id=${this.props.match.params.id}`)
         .then (response => { 
@@ -33,11 +36,14 @@ class NewsArticles extends Component {
 
     render () { 
 
+        // Gets the data saved in state
         const article = this.state.article; 
         const team = this.state.team; 
 
 
         return ( 
+
+            // Setting the props for components 
             <div className = {styles.articleWrapper}> 
                 <Header
                 teamData = {team[0]}
@@ -52,4 +58,5 @@ class NewsArticles extends Component {
 }
 
 
+// Exports
 export default NewsArticles;
