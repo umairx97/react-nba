@@ -4,7 +4,7 @@ This project was created with [Create React App](https://github.com/facebook/cre
 
 In the project directory, you can run:
 
-## `npm instal`
+## `npm install`
 
 Installs the Node Modules dependencies (Internet Connection Required)
 
