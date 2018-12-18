@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {firebaseDB, firebaseLooper, firebaseTeams} from '../../../../firebase';
+import {firebaseDB, firebaseLooper, firebaseTeams, firebaseVideos} from '../../../../firebase';
 
 
 
@@ -55,8 +55,20 @@ class VideoArticle extends Component {
 
 
     getRelated = () => { 
+        firebaseTeams.once('value')
+        .then ((snapshot) => { 
+            const teams = firebaseLooper(snapshot); 
 
-        // console.log(this.state)
+            firebaseVideos.orderByChild('team').equalTo(this.state.article.team).limitToFirst(3).once('value')
+            .then((snapshot)=> { 
+                const related = firebaseLooper(snapshot);
+                this.setState({ 
+                    teams, 
+                    related
+                })
+            })
+        })
+
         // axios.get(`${URL}/teams`)
         // .then(response => { 
         //     let teams = response.data
