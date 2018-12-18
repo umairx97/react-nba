@@ -27,13 +27,13 @@ const Home = () => {
 			   amount = {3}
 		   />
 
-		   {/* <VideosList
+		   <VideosList
 		   type = "card"
 		   title = {true}
 		   loadmore = {true}
 		   start = {0}
 		   amount = {3}
-		   /> */}
+		   />
 		</div>
 	)
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-import {URL} from '../../../../config';
+import {firebaseDB, firebaseLooper, firebaseTeams} from '../../../../firebase';
+
 
 
 // Components
@@ -19,39 +19,61 @@ class VideoArticle extends Component {
 
 
     componentWillMount () { 
-        axios.get(`${URL}/videos?id=${this.props.match.params.id}`)
-        .then (response => { 
-            let article = response.data[0];
+        firebaseDB.ref(`videos/${this.props.match.params.id}`).once('value')
+        .then((snapshot)=>{ 
+            let article = snapshot.val();
 
-            axios.get(`${URL}/teams?id=${article.team}`)
-            .then (response => { 
-                this.setState ({ 
-                    article,
-                    team:response.data
+            firebaseTeams.orderByChild('teamId').equalTo(article.team).once('value')
+            .then((snapshot)=> { 
+                const team = firebaseLooper(snapshot)
+
+                this.setState({ 
+                    article, 
+                    team
                 });
-
                 this.getRelated();
-            }) 
+            })
         })
+
+
+
+        // axios.get(`${URL}/videos?id=${this.props.match.params.id}`)
+        // .then (response => { 
+        //     let article = response.data[0];
+
+        //     axios.get(`${URL}/teams?id=${article.team}`)
+        //     .then (response => { 
+        //         this.setState ({ 
+        //             article,
+        //             team:response.data
+        //         });
+
+        //         this.getRelated();
+        //     }) 
+        // })
     }
 
 
     getRelated = () => { 
-        console.log(this.state)
-        axios.get(`${URL}/teams`)
-        .then(response => { 
-            let teams = response.data
 
-            axios.get(`${URL}/videos?q=${this.state.team[0].city}&_limit=3`)
-            .then(response => { 
-                this.setState({ 
-                    teams,
-                    related: response.data
-                })
-            })
+        // console.log(this.state)
+        // axios.get(`${URL}/teams`)
+        // .then(response => { 
+        //     let teams = response.data
 
-        })
+        //     axios.get(`${URL}/videos?q=${this.state.team[0].city}&_limit=3`)
+        //     .then(response => { 
+        //         this.setState({ 
+        //             teams,
+        //             related: response.data
+        //         })
+        //          this.getRelated();
+        //     })
+
+        // })
     }
+
+
     render(){
         
         const article = this.state.article;

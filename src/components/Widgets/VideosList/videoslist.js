@@ -1,11 +1,11 @@
 // Imports
 import React , {Component} from 'react';
 import styles from './videoslist.module.css';
-import axios from 'axios';
+import {firebaseTeams, firebaseVideos, firebaseLooper} from '../../../firebase';
 
 
-// Components 
-import {URL} from '../../../config';
+
+// Components
 import Button from '../Buttons/buttons';
 import VideosListTemplate from './videoslisttemplate';
 
@@ -31,27 +31,30 @@ class VideosList extends Component {
     // Getting Teams if length is less than 1 and setting the state 
     request = (start, end) => { 
         if(this.state.teams.length < 1 ){
-            axios.get(`${URL}/teams`)
-            .then (response => { 
-                this.setState ({ 
-                    teams:response.data
-                })
-            }) 
+            firebaseTeams.once('value')
+			.then((snapshot)=> { 
+				const teams = firebaseLooper(snapshot); 
+				this.setState({ 
+					teams,
+				})
+			})
 
         }
 
 
         // Getting the videos from the url and setting the state array of videos 
-        axios.get(`${URL}/videos?_start=${start}&_end=${end}`)
-        .then(response => { 
-            this.setState  ({ 
-                videos: [...this.state.videos,...response.data], 
-                
-                // Gets the new value of start and end by updating the state
-                start, 
-                end
-            })
-        })
+        firebaseVideos.orderByChild('id').startAt(start).endAt(end).once('value')
+			.then((snapshot) => { 
+				const videos = firebaseLooper(snapshot);
+				this.setState ({ 
+					videos:[...this.state.videos,...videos], 
+				start,
+				end
+			})
+		})
+			.catch(e=> { 
+				console.log(e);
+			})
     }
 
 
@@ -73,7 +76,7 @@ class VideosList extends Component {
     // Loads more Videos 
     loadMore = () => { 
         let end = this.state.end + this.state.amount;
-        this.request(this.state.end, end);
+        this.request(this.state.end + 1, end);
 
     }
 
