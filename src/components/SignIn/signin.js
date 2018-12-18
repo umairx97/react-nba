@@ -6,57 +6,122 @@ import FormFields from '../Widgets/FormFields/formfields';
 
 class SignIn extends Component { 
 
-    state = { 
-        registerError: '', 
-        loading: false, 
-        formdata: { 
+    state = {
+        registerError:'',
+        loading:false,
+        formdata:{
             email:{
-                element: 'input', 
-                value: '', 
-                config: { 
-                    name: 'email_input', 
-                    type: 'email', 
-                    placeholder: 'enter your email'
-                }, 
-                validation: { 
-                    required: true, 
-                    email: true,
-                }, 
-                valid:false, 
-                touched: false, 
-                validationMessage: '',
-            }, 
-            
-        },
-        password: {
-            element: 'input', 
-            value: '', 
-            config: { 
-                name: 'password_input', 
-                type: 'password', 
-                placeholder: 'enter your password'
-            }, 
-            validation: { 
-                required: true, 
-                password: true,
-            }, 
-            valid:false, 
-            touched: false, 
-            validationMessage: '',
-        },
+                element:'input',
+                value:'',
+                config:{
+                    name:'email_input',
+                    type:'email',
+                    placeholder:'Enter your email'
+                },
+                validation:{
+                    required:true,
+                    email:true
+                },
+                valid:false,
+                touched:false,
+                validationMessage:''
+            },
+            password:{
+                element:'input',
+                value:'',
+                config:{
+                    name:'password_input',
+                    type:'password',
+                    placeholder:'Enter your password'
+                },
+                validation:{
+                    required:true,
+                    password:true
+                },
+                valid:false,
+                touched:false,
+                validationMessage:''
+            }
+        }
     }
 
 
-    updateForm =()=> { 
-        
+
+    updateForm =(element)=> {
+    
+        const newFormdata =  { 
+            ...this.state.formdata
+        }
+
+        const newElement = { 
+            ...newFormdata[element.id]
+        }
+        newElement.value = element.event.target.value; 
+
+        if(element.blur){ 
+            let validData = this.validate(newElement);
+
+            newElement.valid = validData[0]; 
+            newElement.validationMessage = validData[1];
+        }
+
+
+        newElement.touched = element.blur;
+        newFormdata[element.id] = newElement;
+
+
+        console.log(newFormdata);
+
+        this.setState({ 
+            formdata:newFormdata
+        })
+}
+
+
+    validate = (element) => { 
+        let error = [true, ''];
+
+        if(element.validation.email){
+            const valid = /\S+@\S+\.\S+/.test(element.value);
+            const message = `${!valid ? 'Must be a valid email':''}`;
+            error = !valid ? [valid,message] : error
+        }
+
+        if(element.validation.required){
+            const valid = element.value.trim() !== ''; 
+            const message =`${!valid ? 'this field is required':''}`;
+            error = !valid ? [valid, message] : error
+
+
+        }
+
+
+        if(element.validation.password){
+            const valid = element.value.length >= 5; 
+            const message =`${!valid ? 'Must Be Greater Than 5':''}`;
+            error = !valid ? [valid, message] : error
+
+
+        }
+
+        return error
     }
-    render (){ 
+
+        render (){ 
         return ( 
             <div className = {styles.logContainer}> 
                 <form>
+
+                    <h2>Register / Login</h2>
                     <FormFields
                         id = {'email'}
                         formdata = {this.state.formdata.email}
+                        change = {(element)=>this.updateForm(element)}
+                    />
+
+                    <FormFields
+                        id = {'password'}
+                        formdata = {this.state.formdata.password}
                         change = {(element)=>this.updateForm(element)}
                     />
                 </form>
