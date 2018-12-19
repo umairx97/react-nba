@@ -28,6 +28,7 @@ class Layout extends Component {
 		return (
 			<div> 
 				<Header
+					user = {this.props.user}
 					showNav = {this.state.showNav}
 					onHideNav = { () => this.toggleSidenav(false)} //Toggles the Navigation bar state to false 
 					onOpenNav = {() => this.toggleSidenav(true)} //Toggles the Navigation bar state to true
