@@ -1,64 +1,55 @@
-import React from 'react'
-import {Link} from 'react-router-dom'; 
+import React from 'react';
+import { Link } from 'react-router-dom'
+
 import Slick from 'react-slick';
+import styles from './slider.module.css'
 
+const SliderTemplates = (props) => {
 
-// Components
-import style from './slider.module.css'
+    let template = null;
 
-const SliderTemplates = (props) => { 
-	let template = null;
-	
-	
-	// Props for the slider
-	const settings = { 
-		dots: true,
-		infinite: true,
-		arrows: false,
-		speed: 500, 
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		...props.settings 
+    const settings = {
+        dots:true,
+        infinite: true,
+        arrows: false,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll:1,
+        ...props.settings
+    }
 
-	}
+    switch(props.type){
+        case ('featured'):
+            template = props.data.map( (item,i) =>{
+                return(
+                    <div key={i}>
+                       <div className={styles.featured_item}>
+                            <div className={styles.featured_image}
+                                style={{
+                                    background:`url(${item.image})`
+                                }}></div>
+                            <Link to={`/articles/${item.id}`}>
+                                <div className={styles.featured_caption}>
+                                    {item.title}
+                                </div>
+                            </Link>
+                       </div>
+                    </div>
+                )
+            })
+            break;
+        default:
+            template = null;
 
-	// using different properties in different sections
-	switch (props.type){  
-		case ('featured'):
-			template = props.data.map((item, i) => {
-				return ( 
-					<div key = {i}>
-						<div className = {style.featured_item}>
-							<div className = {style.featured_image} style = {{
-								background: `url(../images/articles/${item.image})`
-							}}>
-
-							</div>
-							<Link to = {`/articles/${item.id}`}>
-								<div className = {style.featured_caption}> 
-									{item.title}
-								</div>
-							</Link>
-						</div>
-					</div>
-				)
-			})
-		
-			break;
-			
-		default: 
-			template = null;
-	}
+    }
 
 
 
-
-	return ( 
-		<Slick {...settings}>
-			{template}
-		</Slick>
-	)
+    return(
+        <Slick {...settings} >
+            {template}
+        </Slick>
+    )
 }
 
-// Exports
 export default SliderTemplates;
