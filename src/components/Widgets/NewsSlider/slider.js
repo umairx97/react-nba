@@ -15,30 +15,30 @@ class NewsSlider extends Component {
         .then((snapshot)=>{
             const news = firebaseLooper(snapshot)
             
-            // const asyncFunction = (item,i,cb) =>{
-            //     firebase.storage().ref('images')
-            //     .child(item.image).getDownloadURL()
-            //     .then(url => {
-            //         news[i].image = url;
-            //         cb();
-            //     })
-            // }
+            const asyncFunction = (item,i,cb) =>{
+                firebase.storage().ref('images')
+                .child(item.image).getDownloadURL()
+                .then(url => {
+                    news[i].image = url;
+                    cb();
+                })
+            }
 
 
-            // // let request = [promise 1(ended), promise 2(ended), promise 3(ended)]
-            // let requests = news.map((item,i) =>{
-            //     return new Promise((resolve)=> {
-            //         asyncFunction(item,i, resolve)
-            //     })
-            // })
+            // let request = [promise 1(ended), promise 2(ended), promise 3(ended)]
+            let requests = news.map((item,i) =>{
+                return new Promise((resolve)=> {
+                    asyncFunction(item,i, resolve)
+                })
+            })
 
-            // Promise.all(requests).then(()=>{
+            Promise.all(requests).then(()=>{
                 this.setState({
                     news
                 })
             })
 
-        // });
+        });
 
 
 
